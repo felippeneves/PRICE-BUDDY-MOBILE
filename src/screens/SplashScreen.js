@@ -16,7 +16,7 @@ import {TOKEN_KEY} from '../info/ApplicationInfo'
 import {login} from '../redux/actions/UserAction'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import {ROUTE_MAIN,ROUTE_ACCESS} from './navigator/Navigator'
+import {ROUTE_ACCESS, SCREEN_ESTABLISHMENT} from './navigator/Navigator'
 
 class SplashScreen extends Component
 {
@@ -40,7 +40,7 @@ class SplashScreen extends Component
                         phone: response.payload.identity[0].phone,
                         accessToken: token  
                     })
-                    this.props.navigation.replace(ROUTE_MAIN)
+                    this.props.navigation.replace(SCREEN_ESTABLISHMENT)
                 }).catch(() => {
                     this.props.navigation.replace(ROUTE_ACCESS)
                 })

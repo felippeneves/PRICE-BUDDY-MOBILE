@@ -42,7 +42,6 @@ const initialState = {
             "establishmentLatitude" : "",
             "establishmentLongitude" : "",
             "establishmentOperatingHours" : "",
-            "establishmentFlgOpen" : "",
             "photo": "iVBORw0KGgoAAAANSU..."
         }
     */
@@ -69,8 +68,8 @@ class ProductInformation extends Component
                 isLoading: true
             })
             
-            let productID = '4cdb8012-0467-4e89-8329-8a478b464e00'
-            let establishmentID = '1fc502bd-7002-496c-aeb2-be76800d0a55'
+            let productID = this.props.navigation.getParam('productID')
+            let establishmentID = this.props.navigation.getParam('establishmentID')
 
             new ProductUniqueAPI().getProduct(accessToken, productID, establishmentID).then(([statusCode, data]) => {
                 try
@@ -91,38 +90,38 @@ class ProductInformation extends Component
                                     isLoading: false,
                                     product: null
                                 }, () => {
-                                    this.WarningAPICalled(Strings.Warning, Strings.ProductNotFound)
+                                    this.WarningAPICalled(Strings.Warning, Strings.ProductUniqueNotFound)
                                 })
                             }
 
                             break
                         case 401:
-                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
+                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProductUnique))
                             break
                         case 404:
-                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
+                            this.errorAPICalled(Strings.Warning, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProductUnique))
                             break
                         case 422:
-                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
+                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProductUnique))
                             break
                         default:
-                            this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProduct)
+                            this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProductUnique)
                             break
                     }
                 }
                 catch(error)
                 {
-                    this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProduct)
+                    this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProductUnique)
                 }
             }).catch(() => {
-                this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProduct)
+                this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProductUnique)
             })
 
 
         }
         catch(error)
         {
-            this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProduct)
+            this.errorAPICalled(Strings.FailureAPI, Strings.DefaultMessageCalledAPIProductUnique)
         }
     }
 
@@ -214,6 +213,8 @@ class ProductInformation extends Component
                 // / /g expressão regualar que tras todos os \n presentes na string
                 let descriptionFormated = product.description ? product.description.replace(/\\n/g, '\n') : ''
                 let phoneFormated = this.formatPhone(product.establishmentPhone)
+                let establishmentOperatingHoursFormated = product.establishmentOperatingHours ? product.establishmentOperatingHours.replace(/\\n/g, '\n') : ''
+
 
                 let photoProduct = null
 
@@ -248,8 +249,7 @@ class ProductInformation extends Component
                                     <Text style={styles.textInformation}>{cityState}</Text>
     
                                     <Text style={styles.textTitleInformation}>Horário Funcionamento</Text>
-                                    <Text style={styles.textInformation}>Seg - Sab: 08:00 - 22:00</Text>
-                                    <Text style={styles.textInformation}>Dom: 08:00 - 20:00</Text>
+                                    <Text style={styles.textInformation}>{establishmentOperatingHoursFormated}</Text>
     
                                     <Text style={styles.textTitleInformation}>{Strings.Phone}</Text>
                                     <Text style={styles.textInformation}>{phoneFormated}</Text>

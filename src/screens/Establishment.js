@@ -20,7 +20,7 @@ import Toolbar from '../components/Toolbar'
 import EstablishmentAPI from '../api/EstablishmentAPI'
 import ItemEstablishment from '../components/ItemEstablishment'
 import IconEntypo from 'react-native-vector-icons/Entypo'
-
+import {SCREEN_ESTABLISHMENT_PRODUCTS} from '../screens/navigator/Navigator'
 
 const initialState = {
     isLoading: false,
@@ -157,7 +157,9 @@ class Establishment extends Component
         Alert.alert(title ? title : Strings.FailureAPI, message ? message : Strings.DefaultMessageCalledAPIEstablishment)
     }
 
-    
+    onClickEstablishment = (id, name, distance) => {
+        this.props.navigation.navigate(SCREEN_ESTABLISHMENT_PRODUCTS, { id: id, name: name, distance: distance })
+    }
 
     render()
     {
@@ -177,7 +179,7 @@ class Establishment extends Component
                 viewList =  <FlatList data={listEstablishments}
                                 keyExtractor={item => `${item.id}`}
                                 renderItem={({item}) => 
-                                    <ItemEstablishment {...item} /> } 
+                                    <ItemEstablishment {...item} onClickEstablishment={this.onClickEstablishment}/> } 
                                 showsVerticalScrollIndicator={false}/>
             }
             else
@@ -197,7 +199,6 @@ class Establishment extends Component
                     title={Strings.Establishments}
                     iconLeft={true}
                     iconRight={true}
-                    onLogout={this.logout}
                     navigation={this.props.navigation}/>
                 
                 {viewList}

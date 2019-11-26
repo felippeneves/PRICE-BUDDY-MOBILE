@@ -24,9 +24,8 @@ import {
     ROUTE_ACCESS, 
     SCREEN_ESTABLISHMENT, 
     SCREEN_PRODUCT, 
-    SCREEN_PRODUCT_INFORMATION, 
-    SCREEN_ESTABLISHMENT_PRODUCTS,
-    SCREEN_ESTABLISHMENTS_MAP
+    SCREEN_ESTABLISHMENTS_MAP,
+    SCREEN_MY_PROFILE
 } from '../screens/navigator/Navigator'
 
 
@@ -36,7 +35,6 @@ class MenuItems extends Component
     logout = async () => {
         this.props.navigation.goBack()
         AsyncStorage.removeItem(TOKEN_KEY)
-        // this.props.onLogout()
         this.props.navigation.replace(ROUTE_ACCESS)
     }
 
@@ -46,7 +44,7 @@ class MenuItems extends Component
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.containerProfileUser}>
-                        <Image style={styles.photoUser}/>
+                        {/* <Image style={styles.photoUser}/> */}
                         <Text style={{...styles.textItemUser, fontWeight: 'bold'}}
                             numberOfLines={1}>Felippe Neves</Text>
                         <Text style={styles.textItemUser}
@@ -56,8 +54,8 @@ class MenuItems extends Component
 
                     <TouchableOpacity style={styles.buttonItem}
                         onPress={() => {
-                            this.props.navigation.navigate(SCREEN_ESTABLISHMENT)
                             this.props.navigation.goBack()
+                            this.props.navigation.navigate(SCREEN_ESTABLISHMENT)
                         }}>
                         <IconMaterialCommunityIcons name='store' size={36} color={Colors.White}/>
                         <Text style={styles.textItem}
@@ -67,8 +65,8 @@ class MenuItems extends Component
                    
                     <TouchableOpacity style={styles.buttonItem}
                         onPress={() => {
-                            this.props.navigation.navigate(SCREEN_PRODUCT)
                             this.props.navigation.goBack()
+                            this.props.navigation.push(SCREEN_PRODUCT)
                         }}>
                         <IconEntypo name='shopping-cart' size={36} color={Colors.White}/>
                         <Text style={styles.textItem}
@@ -77,30 +75,30 @@ class MenuItems extends Component
 
                     <TouchableOpacity style={styles.buttonItem}
                         onPress={() => {
-                            this.props.navigation.navigate(SCREEN_PRODUCT_INFORMATION)
                             this.props.navigation.goBack()
+                            this.props.navigation.navigate(SCREEN_ESTABLISHMENTS_MAP)
                         }}>
                         <IconFoundation name='map' size={36} color={Colors.White}/>
                         <Text style={styles.textItem}
                             numberOfLines={1}>{Strings.Map}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonItem}
+                    {/* <TouchableOpacity style={styles.buttonItem}
                         onPress={() => {
-                            this.props.navigation.navigate(SCREEN_ESTABLISHMENT_PRODUCTS)
                             this.props.navigation.goBack()
+                            this.props.navigation.navigate(SCREEN_ESTABLISHMENT_PRODUCTS)
                         }}>
                         <IconMaterialCommunityIcons name='information' size={36} color={Colors.White}/>
                         <Text style={styles.textItem}
                             numberOfLines={1}>{Strings.About}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <View style={styles.divider}/>
 
                     <TouchableOpacity style={styles.buttonItem}
                         onPress={() => {
-                            this.props.navigation.navigate(SCREEN_ESTABLISHMENTS_MAP)
                             this.props.navigation.goBack()
+                            this.props.navigation.navigate(SCREEN_MY_PROFILE)
                         }}>
                         <IconFontAwesome name='user-circle' size={36} color={Colors.White}/>
                         <Text style={styles.textItem}

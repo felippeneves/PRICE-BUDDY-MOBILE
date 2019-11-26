@@ -18,7 +18,7 @@ class ItemProduct extends Component
         let { id, code, name, price, description, weight, establishmentID, establishmentName, establishmentDistance, photo} = this.props
 
         let distanceConvert = this.convertMetersToKM(establishmentDistance)
-        let productNameComplet = name + (weight ? ' ' + weight : '')
+        let productNameComplet = name + (weight ? ' ' + this.convertGramsToKG(weight) : '')
         let priceWithMask = this.formatPrice(price)
 
         let photoProduct = null
@@ -29,7 +29,10 @@ class ItemProduct extends Component
             photoProduct = <Image style={styles.image} source={require('../../assets/not-found.jpg')}/>
 
         return(
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container}
+                onPress = {() => {
+                    this.props.onClickProduct(id, establishmentID)
+                }}>
                  <View style={styles.containerImage}>
                     {photoProduct}
                 </View>
@@ -82,6 +85,27 @@ class ItemProduct extends Component
             unit: 'R$ ',
             separator: ',',
         })
+    }
+
+    convertGramsToKG(weight)
+    {
+        let weightFormated = 0
+
+        if(weight)
+        {
+            if(weight >= 1000)
+            {
+                weightFormated = weight / 1000 + ' KG'
+                return weightFormated.replace('.', ',')
+            }
+            else if (weight != 0)
+            {
+                weightFormated = weight + ' Gramas'
+                return weightFormated.replace('.', ',')
+            }
+        }
+        
+        return 0 + ' Gramas'
     }
 }
 

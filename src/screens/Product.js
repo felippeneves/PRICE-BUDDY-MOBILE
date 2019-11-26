@@ -21,6 +21,9 @@ import Toolbar from '../components/Toolbar'
 import ProductAPI from '../api/ProductAPI'
 import ItemProduct from '../components/ItemProduct'
 import {interpretMessageAPI} from '../api/default/DefaultAPI'
+import {SCREEN_PRODUCT_INFORMATION} from '../screens/navigator/Navigator'
+
+
 
 const initialState = {
     isLoading: false,
@@ -43,8 +46,7 @@ const initialState = {
         ]
     */
    listProducts: [],
-   product: '',
-   qrcode: false
+   product: ''
 }
 
 class Product extends Component
@@ -94,7 +96,8 @@ class Product extends Component
                             this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
                             break
                         case 404:
-                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
+                            this.setState({listProducts: null})
+                            this.errorAPICalled(Strings.Warning, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
                             break
                         case 422:
                             this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
@@ -155,18 +158,25 @@ class Product extends Component
 
     onSuccess = (value) => {
         this.setState({
-            qrcode: false,
-            product: value.data
+            product: value
         }, () => {
             this.searchProducts()
         })
     }
 
+    onClickProduct = (productID, establishmentID) => {
+        this.props.navigation.navigate(SCREEN_PRODUCT_INFORMATION, { productID: productID, establishmentID: establishmentID })
+    }
+
+    qrcode = () => {
+        this.ocorreuLeitura = true
+        this.props.navigation.navigate('QRCode', { onSuccess: this.onSuccess})
+    }
+
     render()
     {
-        let { listProducts, isLoading, product, qrcode } = this.state
+        let { listProducts, isLoading, product } = this.state
 
-        let scanQrcode = null
         let viewList = null
 
         if(!isLoading)
@@ -176,7 +186,7 @@ class Product extends Component
                 viewList =  <FlatList data={listProducts}
                                 keyExtractor={item => `${item.id + ' - ' + item.establishmentID}`}
                                 renderItem={({item}) => 
-                                    <ItemProduct {...item} /> } 
+                                    <ItemProduct {...item} onClickProduct={this.onClickProduct}/> } 
                                 showsVerticalScrollIndicator={false}/>
             }
             else

@@ -21,7 +21,7 @@ import LoginAPI from '../api/LoginAPI'
 import {TOKEN_KEY} from '../info/ApplicationInfo'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import {SCREEN_REGISTER, ROUTE_MAIN, openScreenInAnotherRoute} from './navigator/Navigator'
+import {SCREEN_REGISTER, SCREEN_ESTABLISHMENT, openScreenInAnotherRoute} from './navigator/Navigator'
 
 const initialState = {
     isLoading: false,
@@ -117,7 +117,7 @@ class Login extends Component
                                 accessToken: token    
                             })
                             this.props.onLogin({...this.state})
-                            openScreenInAnotherRoute(ROUTE_MAIN, this.props.navigation)
+                            openScreenInAnotherRoute(SCREEN_ESTABLISHMENT, this.props.navigation)
                             break
 
                         case 404:

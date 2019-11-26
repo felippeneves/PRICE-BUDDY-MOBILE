@@ -19,6 +19,8 @@ import IconEntypo from 'react-native-vector-icons/Entypo'
 import ItemProduct from '../components/ItemProduct'
 import {interpretMessageAPI} from '../api/default/DefaultAPI'
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {SCREEN_PRODUCT_INFORMATION, SCREEN_ESTABLISHMENT_INFORMATION} from '../screens/navigator/Navigator'
+
 
 const initialState = {
     isLoading: false,
@@ -65,9 +67,9 @@ class EstablishmentProducts extends Component
             
             let latitudeTest = '-21.184076'
             let longitudeTest = '-47.794764'
-            let establishmentTest = 'c23f337a-4b7c-450c-9dc8-23af1ec70f0b'
+            let establishmentID = this.props.navigation.getParam('id')
 
-            new ProductAPI().getProducts(accessToken, null, establishmentTest, latitudeTest, longitudeTest).then(([statusCode, data]) => {
+            new ProductAPI().getProducts(accessToken, null, establishmentID, latitudeTest, longitudeTest).then(([statusCode, data]) => {
                 try
                 {
                     switch(statusCode)
@@ -95,7 +97,7 @@ class EstablishmentProducts extends Component
                             this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
                             break
                         case 404:
-                            this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
+                            this.errorAPICalled(Strings.Warning, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
                             break
                         case 422:
                             this.errorAPICalled(Strings.Failure, interpretMessageAPI(data, Strings.DefaultMessageCalledAPIProduct))
@@ -134,9 +136,21 @@ class EstablishmentProducts extends Component
         Alert.alert(title ? title : Strings.FailureAPI, message ? message : Strings.DefaultMessageCalledAPIProduct)
     }
 
-     render()
+    onClickEstablishment = () => {
+        this.props.navigation.navigate(SCREEN_ESTABLISHMENT_INFORMATION, { id: this.props.navigation.getParam('id') })
+    }
+
+
+    onClickProduct = (productID, establishmentID) => {
+        this.props.navigation.navigate(SCREEN_PRODUCT_INFORMATION, { productID: productID, establishmentID: establishmentID })
+    }
+
+    render()
     {
         let { listProducts, isLoading, product, qrcode } = this.state
+
+        let name = this.props.navigation.getParam('name')
+        let distance = this.props.navigation.getParam('distance')
 
         let viewList = null
 
@@ -152,7 +166,7 @@ class EstablishmentProducts extends Component
                 viewList =  <FlatList data={listProducts}
                                 keyExtractor={item => `${item.id + ' - ' + item.establishmentID}`}
                                 renderItem={({item}) => 
-                                    <ItemProduct {...item} /> }
+                                    <ItemProduct {...item} onClickProduct={this.onClickProduct}/> }
                                 showsVerticalScrollIndicator={false}/>
             }
             else
@@ -172,20 +186,19 @@ class EstablishmentProducts extends Component
             <View style={styles.container}>
                 <Toolbar 
                     title={Strings.Products}
-                    subtitle='Petshop D'
+                    subtitle= {name}
                     iconLeft={true}
                     iconRight={true}
                     navigation={this.props.navigation}/>
 
                 <View style={styles.containerInformations}>
                     <View style={styles.containerEstablishment}>
-                        <Text style={styles.textEstablishmentInformations}>Petshop D</Text>
-                        <Text style={{...styles.textEstablishmentInformations, marginTop: 4}}>1,665 KM</Text>
+                        <Text style={styles.textEstablishmentInformations}>{name}</Text>
+                        <Text style={{...styles.textEstablishmentInformations, marginTop: 4}}>{distance}</Text>
                     </View>
                     <TouchableOpacity style={{paddingRight: 8}}
-                        onPress={() => {
-                        }}>
-                        <IconMaterialCommunityIcons name='store' size={36} color={Colors.Black}/>
+                        onPress={this.onClickEstablishment}>
+                        <IconMaterialCommunityIcons name='store' size={36} color={Colors.ColorPrimaryDark}/>
                     </TouchableOpacity>
                 </View>
 

@@ -9,6 +9,8 @@ var Strings =
     PasswordConfirmation: 'Confirmação da Senha',
     CellPhone: 'Celular',
     DoRegister: 'Cadastrar',
+    Save: 'Salvar',
+    ChangePassword: 'Alterar Senha',
     Search: 'Pesquisar',
     InformProduct: 'Informe o Produto',
     Signin: 'Entrar',
@@ -27,11 +29,15 @@ var Strings =
     DefaultMessageCalledAPIUser: 'Não foi possível efetuar o cadastro, verifique sua conexão e tente novamente.',
     DefaultMessageCalledAPILogin: 'Não foi possível efetuar o login, verifique sua conexão e tente novamente.',
     DefaultMessageCalledAPIEstablishment: 'Não foi possível carregar os estabelecimentos, verifique sua conexão e tente novamente.',
+    DefaultMessageCalledAPIEstablishmentUnique: 'Não foi possível carregar o estabelecimento, verifique sua conexão e tente novamente.',
     DefaultMessageCalledAPIProduct: 'Não foi possível carregar os produtos, verifique sua conexão e tente novamente.',
+    DefaultMessageCalledAPIProductUnique: 'Não foi possível carregar o produto, verifique sua conexão e tente novamente.',
+
     MessageFailureRegisterUser: 'Email já cadastrado, verifique seus dados e tente novamente.',
     Success: 'Sucesso',
     MessageSuccessRegisterUser: 'Usuário adicionado com sucesso.',
     Register: 'Cadastro',
+    MyProfile: 'Meu Perfil',
     EnterName: 'Informe o Nome.',
     EnterProduct: 'Informe o Produto.',
     EnterLastname: 'Informe o Sobrenome.',
@@ -46,6 +52,7 @@ var Strings =
     EstablishmentNotFound: 'Não foi encontrado nenhum Estabelecimento',
     SearchProduct: 'Informe o nome ou código de barras para consultar um produto',
     ProductInformationFalied: 'Não foi possível carregar as informações do Produto',
+    EstablishmentInformationFalied: 'Não foi possível carregar as informações do Estabelecimento',
     EstablishmentNoProducts: 'Não foi encontrado nenhum Produto',
     Price: 'Preço',
     Weight: 'Peso',
@@ -56,6 +63,10 @@ var Strings =
     Phone: 'Telefone',
     City: 'Cidade',
     ProductNotFound: 'Não foi encontrado nenhum produto, verifique o valor digitado e tente novamente.',
+    ProductUniqueNotFound: 'Produto não encontrado.',
+    EstablishmentUniqueNotFound: 'Estabelecimento não encontrado.',
+
+
 }
 
 export default Strings

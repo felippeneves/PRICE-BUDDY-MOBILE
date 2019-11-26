@@ -15,7 +15,7 @@ class ItemEstablishment extends Component
 {
     render()
     {
-        let { name, addres, number, complement, neighborhood, city, state, phone, distance, photo } = this.props
+        let {  id, name, addres, number, complement, neighborhood, city, state, phone, distance, photo, clique } = this.props
 
         let addresComplete = addres + ', ' + number + (complement ? complement : '') + ' - ' + neighborhood
         let cityState = city + ' - ' + state
@@ -31,7 +31,10 @@ class ItemEstablishment extends Component
 
 
         return(
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container}
+                onPress = {() => {
+                    this.props.onClickEstablishment(id, name, distanceMeters)
+                }}>
                 <View style={styles.containerImage}>
                     {photoEstablishment}
                 </View>
@@ -120,8 +123,8 @@ const styles = StyleSheet.create({
         padding: 8
     },
     image: {
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
         resizeMode: 'contain',
     }
 })

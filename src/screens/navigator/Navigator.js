@@ -16,13 +16,15 @@ import Product from '../Product'
 import ProductInformation from '../ProductInformation'
 import EstablishmentProducts from '../EstablishmentProducts'
 import EstablishmentsMap from '../EstablishmentsMap'
+import QRCode from '../QRCode'
+import MyProfile from '../MyProfile'
+import EstablishmentInformation from '../EstablishmentInformation'
 
 //Constants 
 
 //Routes
 export const ROUTE_SPLASH = 'SplashScreen'
 export const ROUTE_ACCESS = 'routeAccess'
-export const ROUTE_MAIN = 'routeMain'
 
 //Screens
 export const SCREEN_HOME = 'Home'
@@ -33,7 +35,8 @@ export const SCREEN_PRODUCT = 'Product'
 export const SCREEN_PRODUCT_INFORMATION = 'ProductInformation'
 export const SCREEN_ESTABLISHMENT_PRODUCTS = 'EstablishmentProducts'
 export const SCREEN_ESTABLISHMENTS_MAP = 'EstablishmentsMap'
-
+export const SCREEN_MY_PROFILE = 'MyProfile'
+export const SCREEN_ESTABLISHMENT_INFORMATION = 'EstablishmentInformation'
 
 
 export const openScreenInAnotherRoute = (routeName, navigation) => {
@@ -47,6 +50,9 @@ export const openScreenInAnotherRoute = (routeName, navigation) => {
 const AppNavigator = createStackNavigator({
     SplashScreen: {
         screen: SplashScreen,
+    },
+    Login: {
+        screen: Login,
     },
     routeAccess : createStackNavigator({
         Home: {
@@ -62,32 +68,80 @@ const AppNavigator = createStackNavigator({
         {
             initialRouteName: SCREEN_LOGIN,
             headerMode: 'none',
-        }),
-    routeMain: createDrawerNavigator({
+    }),
+    Establishment: createDrawerNavigator({
         Establishment: {
             screen: Establishment,
         },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    Product: createDrawerNavigator({
         Product: {
             screen: Product,
         },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    ProductInformation: createDrawerNavigator({
         ProductInformation: {
             screen: ProductInformation,
         },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    EstablishmentProducts: createDrawerNavigator({
         EstablishmentProducts: {
             screen: EstablishmentProducts,
         },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    EstablishmentsMap: createDrawerNavigator({
         EstablishmentsMap: {
             screen: EstablishmentsMap,
         },
         },
         {
-            initialRouteName: SCREEN_ESTABLISHMENT,
-            navigationOptions: {
-            },
             contentComponent: MenuItems,
             drawerWidth: '70%',
             drawerPosition: 'left'
-        })
+    }),
+    MyProfile: createDrawerNavigator({
+        MyProfile: {
+            screen: MyProfile,
+        },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    EstablishmentInformation: createDrawerNavigator({
+        EstablishmentInformation: {
+            screen: EstablishmentInformation,
+        },
+        },
+        {
+            contentComponent: MenuItems,
+            drawerWidth: '70%',
+            drawerPosition: 'left'
+    }),
+    QRCode: {
+        screen: QRCode,
+    },
     },
     {
         initialRouteName: ROUTE_SPLASH,
